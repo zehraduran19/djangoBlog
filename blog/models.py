@@ -18,7 +18,7 @@ class Post(models.Model):
 
 
     def __str__(self):
-        return self.title + self.image.name if self.image else "image yok"
+        return self.title + (self.image.name if self.image else "image yok")
 
     def delete(self, *args, **kwargs):
         if self.image and self.image.path:
