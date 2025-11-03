@@ -1,0 +1,62 @@
+{% extends 'blog/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Yazıyı Düzenle - My Django Blog{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow border-0">
+        <div class="card-body">
+          <h3 class="fw-bold text-center mb-4">✏️ Yazıyı Düzenle</h3>
+
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label class="form-label">Başlık</label>
+              {{ form.title|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">İçerik</label>
+              {{ form.content|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Yazar</label>
+              {{ form.author|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Kategori</label>
+              {{ form.category|add_class:"form-select" }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Mevcut Görsel</label><br>
+              {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid mb-2" style="max-height: 200px; border-radius: 10px;">
+              {% else %}
+                <p class="text-muted">Henüz bir görsel eklenmemiş.</p>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Yeni Görsel Yükle</label>
+              {{ form.image|add_class:"form-control" }}
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 mt-3">Güncelle</button>
+          </form>
+
+          <div class="text-center mt-3">
+            <a href="{% url 'post_detail' post.id %}" class="text-muted small">← Yazıya Dön</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

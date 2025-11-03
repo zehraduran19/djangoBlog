@@ -1,0 +1,53 @@
+{% extends 'blog/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Yeni Yazı Ekle - My Django Blog{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow border-0">
+        <div class="card-body">
+          <h3 class="fw-bold text-center mb-4">🆕 Yeni Yazı Ekle</h3>
+
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label class="form-label">Başlık</label>
+              {{ form.title|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">İçerik</label>
+              {{ form.content|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Yazar</label>
+              {{ form.author|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Kategori</label>
+              {{ form.category|add_class:"form-select" }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Kapak Görseli</label>
+              {{ form.image|add_class:"form-control" }}
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mt-3">Kaydet</button>
+          </form>
+
+          <div class="text-center mt-3">
+            <a href="{% url 'home' %}" class="text-muted small">← Anasayfaya Dön</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

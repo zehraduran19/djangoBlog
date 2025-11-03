@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ category.name }} - My Django Blog{% endblock %}
+
+{% block content %}
+<h1>{{ category.name }} Kategorisindeki Yazılar</h1>
+
+{% for post in posts %}
+<div class="card mb-3">
+  <div class="card-body">
+    <h5 class="card-title">{{ post.title }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Yazar: {{ post.author }}</h6>
+    <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+    <a href="{% url 'post_detail' post.id %}" class="card-link">Devamını oku</a>
+  </div>
+</div>
+{% empty %}
+<p>Henüz bu kategoride yazı yok.</p>
+{% endfor %}
+
+<a href="{% url 'home' %}">Geri Dön</a>
+{% endblock %}

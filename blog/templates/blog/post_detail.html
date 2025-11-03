@@ -1,0 +1,45 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{ post.title }} - My Django Blog{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        {% if post.image %}
+          <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="height: 350px; object-fit: cover; border-radius: 10px 10px 0 0;">
+        {% else %}
+          <img src="https://via.placeholder.com/800x350?text=Görsel+Yok" class="card-img-top" alt="placeholder" style="height: 350px; object-fit: cover; border-radius: 10px 10px 0 0;">
+        {% endif %}
+
+        <div class="card-body">
+          <h1 class="card-title fw-bold">{{ post.title }}</h1>
+          <p class="text-muted mb-3">
+            ✍️ {{ post.author }} • 🗓️ {{ post.created_at|date:"d F Y" }}
+            {% if post.category %} • 🏷️ {{ post.category.name }}{% endif %}
+          </p>
+
+          <div class="card-text fs-5" style="line-height: 1.8;">
+            {{ post.content|linebreaks }}
+          </div>
+
+          <div class="mt-4 d-flex gap-2">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-sm">← Anasayfa</a>
+            <a href="{% url 'edit_post' post.id %}" class="btn btn-outline-warning btn-sm">✏️ Düzenle</a>
+            <form action="{% url 'delete_post' post.id %}" method="POST" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Bu yazıyı silmek istediğine emin misin?');">🗑️ Sil</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.card {
+  border-radius: 10px;
+}
+</style>
+{% endblock %}
