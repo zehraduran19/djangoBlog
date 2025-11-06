@@ -1,4 +1,6 @@
 # Create your views here.
+import os
+
 from django.shortcuts import render,  get_object_or_404, redirect
 from .models import Post, Category
 from .forms import PostForm
@@ -40,6 +42,11 @@ def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     print(post)
     if request.method == 'POST':
+        # if self.image and self.image.path:
+        #     if os.path.isfile(self.image.path):
+        #         os.remove(self.image.path)
+        if post.image :
+            os.remove(post.image.path)
         post.delete()
         return redirect('home')
     return redirect('post_detail', post_id=post.id)
